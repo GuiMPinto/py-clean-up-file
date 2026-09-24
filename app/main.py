@@ -1,4 +1,5 @@
 import os
+from typing import Optional
 
 
 class CleanUpFile:
@@ -7,13 +8,13 @@ class CleanUpFile:
         self.file = None
 
     def __enter__(self) -> None:
-        self.file = open(self.filename)
         return self.file
 
-    def __exit__(self, exc_type: None, exc_val: None, exc_tb: None) -> None:
+    def __exit__(self, exc_type: None, exc_val: None,
+                 exc_tb: None) -> Optional[type[BaseException]]:
         if os.path.exists(self.filename):
             os.remove(self.filename)
-        self.file.close()    
+        self.file.close()
 
 
 with CleanUpFile("file.txt"):
